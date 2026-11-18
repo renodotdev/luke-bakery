@@ -1,0 +1,18 @@
+---
+import type { Product } from '../data/catalog';
+import Icon from './Icon.astro';
+import { money } from '../lib/order';
+const { product, index = 0, compact = false } = Astro.props as { product: Product; index?: number; compact?: boolean };
+const prices = product.variants.map(v => v.price).filter((p): p is number => p !== null);
+const price = prices.length ? `${new Set(prices).size > 1 ? 'Mulai ' : ''}${money(Math.min(...prices))}` : 'Konsultasikan pilihan Anda';
+const quick = product.kind === 'fixed' && product.variants.length === 1;
+---
+<article class:list={['product-card', { 'product-card-compact': compact }]} data-product-card data-category={product.category} data-name={`${product.name} ${product.variants.map(v => v.name).join(' ')}`.toLowerCase()}>
+  {!compact && <a class:list={['product-photo', { 'cutout-photo': product.imageCutout }]} href={`/produk/${product.id}/`} aria-label={`Lihat ${product.name}`}>
+    {product.image ? <img src={product.image} alt={product.alt} width="640" height="800" loading="lazy" /> : <div class="gift-art"><img src="/images/luke-monogram.jpg" alt="" width="150" height="150" /><span>Made to be shared.</span></div>}
+    <span class="photo-label">{String(index + 1).padStart(2, '0')} / LUKE COLLECTION</span>
+  </a>}
+  <div class="product-caption"><div><p class="eyebrow">{product.eyebrow}</p><h3><a href={`/produk/${product.id}/`}>{product.name}</a></h3><p class="price">{price}</p><p class="availability">{product.availability === 'unavailable' ? 'Sementara tidak tersedia' : product.kind === 'inquiry' ? 'Penawaran melalui WhatsApp' : `Pre-order · ${product.leadHours / 24} hari`}</p></div>
+    {quick ? <button class="circle-link" type="button" data-quick-add={product.id} disabled={product.availability === 'unavailable'} aria-label={`Tambah ${product.name}`}><Icon name="plus" /></button> : <a class="circle-link" href={`/produk/${product.id}/`} aria-label={`Lihat detail ${product.name}`}><Icon name="arrow" /></a>}
+  </div>
+</article>

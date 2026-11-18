@@ -1,0 +1,14 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { store } from '../data/catalog';
+import { whatsappUrl } from '../lib/order';
+---
+<Base title="Hubungi Luke — Pesanan, Reservasi & Kerja Sama" description="Hubungi Luke Artisan Bakery untuk pemesanan, reservasi, layanan pelanggan, kerja sama, dan purchasing. Temukan menu resmi serta kanal sosial Luke.">
+  <section class="page-intro wrap"><p class="eyebrow">LET'S START A CONVERSATION</p><h1>Sebuah pesan.<br /><em>Sebuah awal yang baik.</em></h1><p>Untuk momen istimewa, pertanyaan kecil, atau rencana kerja sama. Temukan jalur kontak Luke yang sesuai dengan kebutuhan Anda.</p></section>
+  <section class="wrap contact-grid" aria-label="Kontak bisnis Luke">
+    {store.contacts.map((contact, index) => <article class="contact-card"><span class="contact-index">0{index + 1}</span><h2>{contact.name}</h2><p>{contact.description}</p><a class="contact-number" href={whatsappUrl(contact.phone)} target="_blank" rel="noopener noreferrer">{contact.display}</a><a class="text-link" href={whatsappUrl(contact.phone)} target="_blank" rel="noopener noreferrer">Hubungi melalui WhatsApp <Icon name="arrow" /></a></article>)}
+  </section>
+  <section class="wrap contact-directory"><div><p class="eyebrow">STAY IN TOUCH</p><h2>Ikuti cerita <em>Luke.</em></h2><p>Temukan kabar terbaru, koleksi, dan momen di bakery melalui kanal resmi kami.</p><div class="contact-actions"><a class="text-link" href={store.instagram} target="_blank" rel="noopener noreferrer">Instagram · @lukeartisanbakery ↗</a><a class="text-link" href={store.tiktok} target="_blank" rel="noopener noreferrer">TikTok · @lukeartisanbakery ↗</a></div><a class="text-link contact-email" href={`mailto:${store.email}`}>{store.email}</a></div><div><p class="eyebrow">FIND YOUR WAY TO LUKE</p><h3>Menu & pilihan platform</h3><div class="directory-links"><a href="/katalog/">Katalog & pre-order pickup <Icon name="arrow" /></a><a href={store.fullMenuUrl} target="_blank" rel="noopener noreferrer">Seluruh menu resmi ↗</a><a href={store.gofood} target="_blank" rel="noopener noreferrer">Luke di GoFood ↗</a><a href={store.grabfood} target="_blank" rel="noopener noreferrer">Luke di GrabFood ↗</a><a href={store.maps} target="_blank" rel="noopener noreferrer">Lokasi di Google Maps ↗</a></div><p class="small-copy">Pesanan dari website ini diambil langsung di bakery. Opsi dan ketersediaan pada platform lain mengikuti aplikasi masing-masing.</p></div></section>
+  <section class="wrap contact-visit"><p class="eyebrow">A CLASSIC BAKERY & GOURMET EATERY BY CENGLI GROUP</p><p>{store.address}</p><p>Senin–Minggu · Bakery 07.00–22.00 · Eatery 07.00–20.00 WIB</p><a class="text-link" href="/kunjungi/">Rencanakan kunjungan →</a></section>
+</Base>

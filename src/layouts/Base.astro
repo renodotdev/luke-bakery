@@ -1,0 +1,52 @@
+---
+import '../styles/global.css';
+import '@fontsource/cormorant-garamond/latin-400.css';
+import '@fontsource/cormorant-garamond/latin-400-italic.css';
+import '@fontsource/manrope/latin-400.css';
+import '@fontsource/manrope/latin-500.css';
+import '@fontsource/manrope/latin-600.css';
+import '@fontsource/manrope/latin-700.css';
+import Icon from '../components/Icon.astro';
+import { store } from '../data/catalog';
+import type { Product } from '../data/catalog';
+import { validateCatalog } from '../lib/catalog-validation';
+import { products, categories } from '../data/catalog';
+interface Props { title?: string; description?: string; image?: string; noindex?: boolean; product?: Product; }
+const { title = 'Luke Artisan Bakery — A Splendor of Flavor', description = 'Jelajahi tiramisu, pastry, cake, dan pilihan hadiah Luke Artisan Bakery di Malang. Pre-order dan ambil di toko melalui WhatsApp.', image = '/images/tiramisu.jpg', noindex = false, product } = Astro.props;
+validateCatalog(products, categories.map(c => c.id));
+const current = Astro.url.pathname;
+const origin = Astro.site!;
+const canonical = new URL(current, origin).href;
+const indexable = import.meta.env.PUBLIC_INDEXABLE === 'true' && !noindex;
+const business = { '@context': 'https://schema.org', '@type': 'Bakery', '@id': new URL('/#bakery', origin).href, name: store.name, url: origin.href, image: new URL('/images/tiramisu.jpg', origin).href, telephone: '+62895403825017', address: { '@type': 'PostalAddress', streetAddress: 'Jl. Pahlawan Trip No.11, Oro-oro Dowo, Klojen', addressLocality: 'Malang', addressRegion: 'Jawa Timur', postalCode: '65119', addressCountry: 'ID' }, geo: { '@type': 'GeoCoordinates', latitude: -7.9679567, longitude: 112.6213428 }, openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], opens: '07:00', closes: '22:00' }], hasMap: store.maps, sameAs: [store.instagram], hasMenu: new URL('/katalog/', origin).href };
+const productData = product ? { '@context': 'https://schema.org', '@type': 'Product', name: product.name, description: product.description, url: canonical, image: new URL(product.image || '/images/luke-wordmark.webp', origin).href, brand: { '@type': 'Brand', name: store.name }, ...(product.kind === 'fixed' ? { offers: product.variants.map(v => ({ '@type': 'Offer', name: v.name, price: v.price, priceCurrency: 'IDR', url: canonical, availability: `https://schema.org/${product.availability === 'unavailable' ? 'OutOfStock' : product.availability === 'preorder' ? 'PreOrder' : 'InStock'}` })) } : {}) } : null;
+const breadcrumbs = product ? { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Beranda', item: origin.href }, { '@type': 'ListItem', position: 2, name: 'Katalog', item: new URL('/katalog/', origin).href }, { '@type': 'ListItem', position: 3, name: product.name, item: canonical }] } : null;
+const jsonLd = JSON.stringify([business, productData, breadcrumbs].filter(Boolean)).replace(/</g, '\\u003c');
+---
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title><meta name="description" content={description} />
+    <meta name="theme-color" content="#faf6ef" /><meta property="og:title" content={title} /><meta property="og:description" content={description} />
+    <link rel="canonical" href={canonical} /><meta property="og:url" content={canonical} /><meta property="og:type" content={product ? 'product' : 'website'} /><meta property="og:site_name" content={store.name} /><meta property="og:locale" content="id_ID" /><meta property="og:image" content={new URL(image, origin).href} /><meta name="twitter:card" content="summary_large_image" />
+    <meta name="robots" content={indexable ? 'index,follow' : 'noindex,follow'} />
+    <script type="application/ld+json" set:html={jsonLd} />
+    <link rel="icon" href="/images/luke-monogram.jpg" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Langsung ke konten</a>
+    <div class="announcement">A classic bakery & gourmet eatery <span>·</span> Malang, Indonesia</div>
+    <header class="site-header wrap">
+      <a href="/" class="brand" aria-label="Luke Artisan Bakery, beranda"><img src="/images/luke-wordmark.webp" alt="LUKE" width="4197" height="1947" /><span>ARTISAN BAKERY</span></a>
+      <nav aria-label="Navigasi utama"><a href="/katalog/" aria-current={current.startsWith('/katalog') ? 'page' : undefined}>Katalog</a><a href="/cara-pesan/" aria-current={current.startsWith('/cara-pesan') ? 'page' : undefined}>Cara Pesan</a><a href="/kunjungi/" aria-current={current.startsWith('/kunjungi') ? 'page' : undefined}>Kunjungi Kami</a></nav>
+      <a class="header-bag" href="/pesanan/" aria-label="Lihat tas pesanan" data-header-bag><Icon name="bag" /><span class="bag-word">Tas Pesanan</span><span class="bag-count" data-bag-count>0</span></a>
+    </header>
+    <main id="main"><slot /></main>
+    <footer class="site-footer"><div class="wrap footer-grid"><div><a href="/" class="brand footer-brand"><img src="/images/luke-wordmark.webp" alt="LUKE" width="4197" height="1947" /><span>ARTISAN BAKERY</span></a><p>{store.tagline}<br />A classic bakery & gourmet eatery by {store.group}.</p></div><div><p class="eyebrow">FIND US</p><p>{store.address}</p><a class="text-link" href={store.maps} target="_blank" rel="noreferrer">Petunjuk arah ↗</a><a href="/hubungi/">Hubungi Luke</a><a href="/cara-pesan/">Cara pemesanan</a><a href="/privasi/">Privasi</a></div><div><p class="eyebrow">STAY A LITTLE LONGER</p><a href={store.instagram} target="_blank" rel="noreferrer">Instagram ↗</a><a href={store.tiktok} target="_blank" rel="noreferrer">TikTok ↗</a><a href={store.fullMenuUrl} target="_blank" rel="noreferrer">Seluruh menu resmi ↗</a><a href={store.gofood} target="_blank" rel="noreferrer">GoFood ↗</a><a href={store.grabfood} target="_blank" rel="noreferrer">GrabFood ↗</a></div></div><div class="wrap footer-bottom"><span>© {new Date().getFullYear()} Luke Artisan Bakery</span><span>Thoughtfully made, joyfully shared.</span></div></footer>
+    <div class="draft-note">Pre-order & ambil di bakery · Ketersediaan dan waktu pengambilan dikonfirmasi melalui WhatsApp</div>
+    <a href="/pesanan/" class="mobile-bag" data-mobile-bag hidden><Icon name="bag" /><span><span data-bag-count>0</span> item · Lihat tas</span><strong data-bag-total></strong><Icon name="arrow" /></a>
+    <div class="toast" role="status" aria-live="polite" data-toast hidden></div>
+    <script>import '../lib/client';</script>
+  </body>
+</html>

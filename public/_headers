@@ -1,0 +1,9 @@
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+
+/catalog.json
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/pesanan/*
+  Cache-Control: no-store

@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+import ProductCard from '../components/ProductCard.astro';
+import Icon from '../components/Icon.astro';
+import { categories, products, store } from '../data/catalog';
+---
+<Base title="Katalog — Luke Artisan Bakery">
+  <section class="page-intro wrap"><p class="eyebrow">THE LUKE COLLECTION</p><h1>Sesuatu yang <em>istimewa.</em></h1><p>Pilihan untuk hari biasa yang indah, dan momen yang ingin Anda rayakan.</p></section>
+  <section class="wrap catalog-section" data-catalog>
+    <div class="catalog-toolbar"><div class="category-list" role="group" aria-label="Kategori produk">{categories.map((category, i) => <button type="button" data-category-filter={category.id} aria-pressed={i === 0}>{category.name}</button>)}</div><label class="search"><Icon name="search" /><span class="sr-only">Cari produk atau varian</span><input type="search" placeholder="Cari produk atau varian…" data-search /></label></div>
+    <div class="catalog-info"><p>Harga belum termasuk pajak {store.taxBps / 100}%. Pre-order minimal 1 hari; sourdough 2 hari. Ketersediaan mengikuti konfirmasi Luke.</p><a href={store.menuUrl} class="text-link" target="_blank" rel="noopener noreferrer">Katalog resmi ↗</a></div>
+    <div class="catalog-with-bag"><div>
+      <div class="product-grid" data-catalog-group>{products.filter(p => p.featured).map((product, index) => <ProductCard product={product} index={index} />)}</div>
+      <div class="menu-list" data-catalog-group>{products.filter(p => !p.featured).map(product => <ProductCard product={product} compact />)}</div>
+      <div class="empty-state" data-no-results hidden><h2>Belum menemukan pilihan Anda?</h2><p>Coba kata pencarian lain atau lihat seluruh koleksi.</p><button class="button" type="button" data-reset-filter>Lihat semua pilihan</button></div>
+      <p class="result-count" data-result-count aria-live="polite">{products.length} pilihan</p>
+    </div><aside class="catalog-bag" data-catalog-bag hidden aria-label="Ringkasan tas"><p class="eyebrow">CHOSEN BY YOU</p><h2>Tas <em>Anda.</em></h2><ul data-bag-summary></ul><div><span>Estimasi termasuk pajak</span><strong data-bag-total></strong></div><a href="/pesanan/" class="button button-full">Tinjau pesanan <Icon name="arrow" /></a><p class="small-copy">Pilihan belum dikirim. Tim Luke akan mengonfirmasi ketersediaan dan waktu pickup.</p></aside></div>
+  </section>
+</Base>

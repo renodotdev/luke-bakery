@@ -1,0 +1,12 @@
+---
+import Icon from './Icon.astro';
+import { store } from '../data/catalog';
+---
+<section class="message-preview" data-message-preview hidden aria-label="Tinjau pesan WhatsApp">
+  <h3>Periksa sekali lagi.</h3>
+  <label class="field">Pesan untuk tim Luke<textarea readonly rows="11" data-message></textarea></label>
+  <p class="handoff-help" data-long-message hidden>Pesan Anda cukup panjang. Salin seluruh pesan, buka WhatsApp, lalu tempel di percakapan Luke.</p>
+  <a class="button button-whatsapp button-full" data-whatsapp-handoff href={`https://wa.me/${store.whatsapp}`} target="_blank" rel="noopener noreferrer">Lanjut ke WhatsApp <Icon name="arrow" /></a>
+  <button type="button" class="button button-outline button-full" data-copy-message>Salin seluruh pesan</button>
+  <p class="small-copy">Anda masih perlu menekan Kirim di WhatsApp. Tautan ini belum mengirim atau mengonfirmasi pesanan. Jika aplikasi tidak terbuka, salin pesan dan hubungi {store.phone}.</p>
+</section>

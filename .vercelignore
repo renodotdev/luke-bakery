@@ -1,0 +1,9 @@
+.git/
+node_modules/
+dist/
+.astro/
+.env*
+.openai/
+deploy/
+docs/
+videos/

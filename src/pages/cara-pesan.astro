@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+import { store } from '../data/catalog';
+import { whatsappUrl } from '../lib/order';
+---
+<Base title="Cara Pesan — Luke Artisan Bakery">
+  <section class="page-intro wrap"><p class="eyebrow">THOUGHTFULLY CHOSEN, JOYFULLY SHARED</p><h1>Dari pilihan, ke <em>perayaan.</em></h1><p>Pesanan untuk diambil langsung di Luke Artisan Bakery, Malang.</p></section>
+  <section class="wrap prose-page"><ol class="instruction-list">
+    <li><h2>Temukan pilihan Anda.</h2><p>Jelajahi katalog, pilih ukuran atau varian, lalu tambahkan jumlah yang diinginkan ke tas. Untuk custom cake, mix cake, atau hampers, gunakan konsultasi di halaman produk.</p></li>
+    <li><h2>Tinjau dan ceritakan.</h2><p>Periksa rincian dan estimasi total, termasuk pajak sesuai katalog. Isi nama, preferensi waktu pengambilan, dan catatan yang diperlukan. Tidak ada biaya pengiriman karena pesanan diambil di toko.</p></li>
+    <li><h2>Lanjutkan melalui WhatsApp.</h2><p>Tekan Siapkan pesan WhatsApp, baca kembali pesan, lalu lanjutkan ke WhatsApp. Anda perlu menekan Kirim di WhatsApp agar permintaan diterima tim Luke. Jika aplikasi tidak terbuka, salin seluruh pesan dan hubungi {store.phone}.</p></li>
+    <li><h2>Tunggu konfirmasi tim Luke.</h2><p>Tim Luke mengonfirmasi ketersediaan produk, waktu pickup, total akhir, dan cara pembayaran. Membuka WhatsApp belum berarti pesanan diterima; tas tetap tersimpan agar Anda mudah kembali meninjaunya.</p></li>
+  </ol>
+    <div class="quiet-note"><strong>Tentang pre-order.</strong><p>Katalog resmi meminta produk yang belum tersedia di etalase dipesan minimal satu hari sebelumnya; sourdough minimal dua hari. Website ini menerima permintaan pre-order dengan waktu persiapan tersebut. Untuk stok hari ini atau kebutuhan lebih cepat, tanyakan langsung kepada tim Luke.</p><a class="text-link" href={whatsappUrl(store.whatsapp, 'Halo Luke, saya ingin menanyakan pilihan bakery yang tersedia untuk diambil hari ini.')} target="_blank" rel="noopener noreferrer">Tanyakan stok hari ini ↗</a></div>
+    <div class="faq-list"><h2>Pertanyaan yang sering diajukan</h2>
+      <details><summary>Apakah harga sudah termasuk pajak?</summary><p>Harga produk pada katalog belum termasuk pajak {store.taxBps / 100}%. Tas menghitung estimasi pajak dan total. Harga dan total akhir dikonfirmasi tim Luke sesuai pesanan Anda.</p></details>
+      <details><summary>Apakah bisa diantar?</summary><p>Alur pemesanan website saat ini khusus ambil di bakery. Untuk informasi pilihan lain, hubungi tim Luke.</p></details>
+      <details><summary>Bagaimana cara membayar?</summary><p>Tim Luke menjelaskan cara pembayaran dan mengonfirmasi pesanan melalui WhatsApp. Website tidak menerima pembayaran atau meminta detail kartu.</p></details>
+      <details><summary>Bisakah saya memesan custom cake atau hampers?</summary><p>Bisa diajukan melalui formulir konsultasi pada halaman Celebration Cakes, Mix Cake, atau Hampers & Gifts. Harga dan waktu persiapan mengikuti hasil konsultasi, sehingga tidak digabung ke subtotal produk dengan harga tetap.</p></details>
+      <details><summary>Apakah tas saya tetap ada setelah membuka WhatsApp?</summary><p>Ya, selama browser mengizinkan penyimpanan lokal. Tas tidak dihapus otomatis karena website tidak dapat memastikan apakah pesan telah dikirim atau pesanan telah diterima.</p></details>
+    </div>
+    <a href="/katalog/" class="button">Jelajahi katalog →</a>
+  </section>
+</Base>

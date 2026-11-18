@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import PickupFields from '../components/PickupFields.astro';
+import MessagePreview from '../components/MessagePreview.astro';
+import { store } from '../data/catalog';
+---
+<Base title="Tas Pesanan — Luke Artisan Bakery" noindex>
+  <section class="page-intro wrap"><p class="eyebrow">CHOSEN BY YOU, PREPARED WITH CARE</p><h1>Pesanan <em>Anda.</em></h1><p>Tinjau pilihan Anda, tentukan preferensi pengambilan, lalu lanjutkan percakapan dengan tim Luke.</p></section>
+  <section class="wrap order-section" data-order>
+    <noscript><p class="quiet-note">Aktifkan JavaScript untuk meninjau tas, atau <a href={`https://wa.me/${store.whatsapp}`}>hubungi Luke melalui WhatsApp</a>.</p></noscript>
+    <p class="order-update" data-order-update role="status" hidden></p>
+    <div class="empty-state" data-empty-bag><Icon name="bag" /><h2>Masih ada ruang untuk sesuatu yang istimewa.</h2><p>Temukan pilihan dari koleksi Luke untuk mengisi tas Anda.</p><a href="/katalog/" class="button">Jelajahi katalog <Icon name="arrow" /></a></div>
+    <div class="order-grid" data-filled-bag hidden>
+      <div><div class="order-column-heading"><h2>Tersimpan untuk Anda</h2><a href="/katalog/" class="text-link">Tambah pilihan ↗</a></div><p class="quantity-help">Ketik jumlah langsung atau gunakan tombol − dan +.</p><div data-order-lines></div>
+        <dl class="totals-breakdown"><div><dt>Subtotal produk</dt><dd data-subtotal></dd></div><div><dt>Pajak sesuai katalog (10%)</dt><dd data-tax></dd></div><div class="grand-total"><dt>Estimasi total</dt><dd data-total aria-live="polite"></dd></div></dl>
+        <p class="small-copy">Harga mengikuti katalog resmi; total akhir dan ketersediaan dikonfirmasi tim Luke. Tidak ada pembayaran atau reservasi otomatis.</p>
+        <div class="pickup-location"><Icon name="pin" /><div><strong>Ambil di Luke Artisan Bakery</strong><p>{store.address}</p><a class="text-link" href={store.maps} target="_blank" rel="noopener noreferrer">Petunjuk arah ↗</a></div></div>
+      </div>
+      <div class="pickup-panel"><p class="eyebrow">PICKUP AT LUKE</p><h2>Rencanakan <em>momen Anda.</em></h2>
+        <form data-pickup-form data-requires-js hidden><PickupFields /><button type="submit" class="button button-full" data-prepare-button>Siapkan pesan WhatsApp <Icon name="arrow" /></button></form>
+        <MessagePreview />
+        <p class="privacy-note">Nama dan catatan tidak disimpan di website. Melanjutkan ke WhatsApp menyertakan isi pesan dalam tautan. <a href="/privasi/">Tentang privasi</a></p>
+      </div>
+    </div>
+  </section>
+</Base>

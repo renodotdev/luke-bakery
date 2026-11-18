@@ -1,0 +1,8 @@
+---
+const { inquiry = false } = Astro.props;
+---
+<label class="field">Nama Anda<input type="text" name="name" maxlength="80" autocomplete="given-name" required /></label>
+<div class="field-pair"><label class="field">Tanggal pilihan<input type="date" name="date" required /></label><label class="field">Waktu pilihan (WIB)<input type="time" name="time" min="07:00" max="21:59" required /></label></div>
+<label class="field"><span>{inquiry ? 'Ceritakan kebutuhan Anda' : 'Catatan'} <span class="optional">(opsional)</span></span><textarea name="notes" rows="3" maxlength="600" placeholder={inquiry ? 'Momen acara, jumlah orang, pilihan cake atau isi hampers…' : 'Tulisan pada cake, kebutuhan khusus, atau pertanyaan Anda…'}></textarea></label>
+<p class="small-copy" data-lead-help>{inquiry ? 'Tanggal dan waktu merupakan preferensi untuk konsultasi. Jadwal produksi mengikuti konfirmasi tim Luke.' : 'Pre-order minimal 24 jam, sourdough minimal 48 jam. Untuk stok etalase hari ini, hubungi tim Luke.'}</p>
+<p class="form-error" data-form-error role="alert" tabindex="-1" hidden></p>
