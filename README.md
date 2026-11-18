@@ -62,6 +62,8 @@ Set `PUBLIC_SITE_URL` to the intended HTTPS origin in Vercel's project environme
 
 See [implementation status](docs/implementation-status.md) and [verification evidence](docs/verification/results.md). Browser tests covered priced checkout, separate variants, custom inquiries, long-message fallback, and responsive layouts. No test order was sent to the bakery. Physical iPhone/Android/Instagram-app handoff and real-user Core Web Vitals require device/traffic verification beyond the local browser.
 
+The [18 November UI/UX audit](docs/verification/responsive-ui-audit.md) records the typography improvements, responsive checks from 320px to 1920px, touch-target measurements, and updated keranjang terminology.
+
 ## Presentation video
 
 The presentation walkthrough remains local under `videos/`; it is not required for the website build or included in the deployment commit.

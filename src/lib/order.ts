@@ -13,13 +13,13 @@ export function quantityError(value: string): string | null {
 }
 
 export function reconcileBag(input: unknown, catalog: Product[]): { lines: OrderLine[]; notices: string[] } {
-  if (!Array.isArray(input)) return { lines: [], notices: input == null ? [] : ['Tas yang tersimpan tidak dapat dibaca. Silakan pilih produk kembali.'] };
+  if (!Array.isArray(input)) return { lines: [], notices: input == null ? [] : ['Keranjang yang tersimpan tidak dapat dibaca. Silakan pilih produk kembali.'] };
   const lines: OrderLine[] = [], notices = new Set<string>();
   for (const raw of input.slice(0, 1000)) {
     if (!raw || typeof raw !== 'object') { notices.add('Pilihan yang tidak valid telah dihapus.'); continue; }
     const product = catalog.find(p => p.id === raw.productId);
     const variant = product?.variants.find(v => v.id === raw.variantId);
-    if (!product || !variant || product.availability === 'unavailable' || product.kind !== 'fixed' || variant.price === null) { notices.add(`${product?.name ?? 'Salah satu pilihan'} tidak dapat dipesan dari tas dan telah dihapus.`); continue; }
+    if (!product || !variant || product.availability === 'unavailable' || product.kind !== 'fixed' || variant.price === null) { notices.add(`${product?.name ?? 'Salah satu pilihan'} tidak dapat dipesan dari keranjang dan telah dihapus.`); continue; }
     if (!Number.isInteger(raw.quantity) || raw.quantity < 1 || raw.quantity > MAX_QUANTITY) { notices.add(`Jumlah ${product.name} tidak valid dan telah dihapus.`); continue; }
     if (typeof raw.unitPrice === 'number' && raw.unitPrice !== variant.price) notices.add(`Harga ${product.name} diperbarui menjadi ${money(variant.price)} per item. Tinjau kembali pilihan Anda.`);
     const existing = lines.find(p => p.productId === raw.productId && p.variantId === raw.variantId);

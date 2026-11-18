@@ -14,6 +14,6 @@ import { categories, products, store } from '../data/catalog';
       <div class="menu-list" data-catalog-group>{products.filter(p => !p.featured).map(product => <ProductCard product={product} compact />)}</div>
       <div class="empty-state" data-no-results hidden><h2>Belum menemukan pilihan Anda?</h2><p>Coba kata pencarian lain atau lihat seluruh koleksi.</p><button class="button" type="button" data-reset-filter>Lihat semua pilihan</button></div>
       <p class="result-count" data-result-count aria-live="polite">{products.length} pilihan</p>
-    </div><aside class="catalog-bag" data-catalog-bag hidden aria-label="Ringkasan tas"><p class="eyebrow">CHOSEN BY YOU</p><h2>Tas <em>Anda.</em></h2><ul data-bag-summary></ul><div><span>Estimasi termasuk pajak</span><strong data-bag-total></strong></div><a href="/pesanan/" class="button button-full">Tinjau pesanan <Icon name="arrow" /></a><p class="small-copy">Pilihan belum dikirim. Tim Luke akan mengonfirmasi ketersediaan dan waktu pickup.</p></aside></div>
+    </div><aside class="catalog-bag" data-catalog-bag hidden aria-label="Ringkasan keranjang"><p class="eyebrow">CHOSEN BY YOU</p><h2>Keranjang <em>Anda.</em></h2><ul data-bag-summary></ul><div><span>Estimasi termasuk pajak</span><strong data-bag-total></strong></div><a href="/pesanan/" class="button button-full">Tinjau pesanan <Icon name="arrow" /></a><p class="small-copy">Pilihan belum dikirim. Tim Luke akan mengonfirmasi ketersediaan dan waktu pickup.</p></aside></div>
   </section>
 </Base>

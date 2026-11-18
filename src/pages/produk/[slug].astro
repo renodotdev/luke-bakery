@@ -24,16 +24,16 @@ const photos = product.image ? [{ src: product.image, alt: product.alt, label: p
             {product.variants.length > 1 && <option value="" selected disabled>Pilih varian terlebih dahulu</option>}
             {product.variants.map(v => <option value={v.id}>{v.name} — {money(v.price!)}</option>)}
           </select></label>
-          <div class="add-row"><label class="field quantity-field">Jumlah<input name="quantity" type="number" min="1" max="99" step="1" value="1" required inputmode="numeric" /></label><button class="button" type="submit" disabled={product.availability === 'unavailable'}>Tambah ke tas <Icon name="plus" /></button></div>
+          <div class="add-row"><label class="field quantity-field">Jumlah<input name="quantity" type="number" min="1" max="99" step="1" value="1" required inputmode="numeric" /></label><button class="button" type="submit" disabled={product.availability === 'unavailable'}>Tambah ke keranjang <Icon name="plus" /></button></div>
         </form>
-        <p class="small-copy">Harga belum termasuk pajak 10%. Estimasi termasuk pajak terlihat di tas. Ketersediaan dan total akhir mengikuti konfirmasi tim Luke.</p>
+        <p class="small-copy">Harga belum termasuk pajak 10%. Estimasi termasuk pajak terlihat di keranjang. Ketersediaan dan total akhir mengikuti konfirmasi tim Luke.</p>
         <p class="product-status">{product.availability === 'unavailable' ? 'Sementara tidak tersedia' : `Pre-order minimal ${product.leadHours} jam · ambil di bakery`}</p>
       </> : <div class="inquiry-panel"><form data-inquiry-form data-product={product.id} data-requires-js hidden><PickupFields inquiry /><button type="submit" class="button button-full">Diskusikan pesanan <Icon name="arrow" /></button></form><MessagePreview /></div>}
       {product.details && <ul class="product-notes">{product.details.map(detail => <li>{detail}</li>)}</ul>}
       <div class="detail-facts"><div><Icon name="bag" /><div><strong>Ambil langsung di bakery</strong><p>Waktu pengambilan dikonfirmasi oleh tim Luke.</p></div></div><div><Icon name="pin" /><div><strong>Pahlawan Trip No.11, Malang</strong><p><a class="text-link" href="/kunjungi/">Lokasi & jam buka ↗</a></p></div></div></div>
       <details class="product-faq"><summary>Komposisi, alergen & penyimpanan</summary><p>Hubungi tim Luke untuk informasi komposisi, alergen, dan penyimpanan yang sesuai dengan varian Anda. Sampaikan kebutuhan diet atau alergi sebelum memesan.</p><a class="text-link" href={whatsappUrl(store.whatsapp, `Halo Luke, saya ingin menanyakan informasi komposisi, alergen, dan penyimpanan ${product.name}.`)} target="_blank" rel="noopener noreferrer">Tanyakan kepada Luke ↗</a></details>
       <p class="source-link"><a href={store.menuUrl} target="_blank" rel="noopener noreferrer">Lihat katalog resmi ↗</a> · Harga dan ketersediaan dapat berubah.</p>
-      <noscript><p class="quiet-note">Aktifkan JavaScript untuk menggunakan tas, atau <a href={whatsappUrl(store.whatsapp)} target="_blank" rel="noreferrer">hubungi Luke langsung melalui WhatsApp</a>.</p></noscript>
+      <noscript><p class="quiet-note">Aktifkan JavaScript untuk menggunakan keranjang, atau <a href={whatsappUrl(store.whatsapp)} target="_blank" rel="noreferrer">hubungi Luke langsung melalui WhatsApp</a>.</p></noscript>
     </div>
   </section>
   {related.length > 0 && <section class="section wrap related-section"><div class="section-heading"><div><p class="eyebrow">A LITTLE MORE TO LOVE</p><h2>Temukan pilihan <em>lainnya.</em></h2></div></div><div class="menu-list">{related.map(p => <ProductCard product={p} compact />)}</div></section>}

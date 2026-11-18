@@ -5,12 +5,12 @@ import PickupFields from '../components/PickupFields.astro';
 import MessagePreview from '../components/MessagePreview.astro';
 import { store } from '../data/catalog';
 ---
-<Base title="Tas Pesanan — Luke Artisan Bakery" noindex>
+<Base title="Keranjang Pesanan — Luke Artisan Bakery" noindex>
   <section class="page-intro wrap"><p class="eyebrow">CHOSEN BY YOU, PREPARED WITH CARE</p><h1>Pesanan <em>Anda.</em></h1><p>Tinjau pilihan Anda, tentukan preferensi pengambilan, lalu lanjutkan percakapan dengan tim Luke.</p></section>
   <section class="wrap order-section" data-order>
-    <noscript><p class="quiet-note">Aktifkan JavaScript untuk meninjau tas, atau <a href={`https://wa.me/${store.whatsapp}`}>hubungi Luke melalui WhatsApp</a>.</p></noscript>
+    <noscript><p class="quiet-note">Aktifkan JavaScript untuk meninjau keranjang, atau <a href={`https://wa.me/${store.whatsapp}`}>hubungi Luke melalui WhatsApp</a>.</p></noscript>
     <p class="order-update" data-order-update role="status" hidden></p>
-    <div class="empty-state" data-empty-bag><Icon name="bag" /><h2>Masih ada ruang untuk sesuatu yang istimewa.</h2><p>Temukan pilihan dari koleksi Luke untuk mengisi tas Anda.</p><a href="/katalog/" class="button">Jelajahi katalog <Icon name="arrow" /></a></div>
+    <div class="empty-state" data-empty-bag><Icon name="bag" /><h2>Masih ada ruang untuk sesuatu yang istimewa.</h2><p>Temukan pilihan dari koleksi Luke untuk mengisi keranjang Anda.</p><a href="/katalog/" class="button">Jelajahi katalog <Icon name="arrow" /></a></div>
     <div class="order-grid" data-filled-bag hidden>
       <div><div class="order-column-heading"><h2>Tersimpan untuk Anda</h2><a href="/katalog/" class="text-link">Tambah pilihan ↗</a></div><p class="quantity-help">Ketik jumlah langsung atau gunakan tombol − dan +.</p><div data-order-lines></div>
         <dl class="totals-breakdown"><div><dt>Subtotal produk</dt><dd data-subtotal></dd></div><div><dt>Pajak sesuai katalog (10%)</dt><dd data-tax></dd></div><div class="grand-total"><dt>Estimasi total</dt><dd data-total aria-live="polite"></dd></div></dl>

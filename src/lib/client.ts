@@ -18,7 +18,7 @@ function loadBag() {
     if (result.notices.length) notice = result.notices.join(' ');
   } catch {
     storageAvailable = false;
-    notice = 'Tas yang tersimpan tidak dapat dibaca atau penyimpanan browser tidak tersedia. Pilihan baru hanya bertahan di halaman ini.';
+    notice = 'Keranjang yang tersimpan tidak dapat dibaca atau penyimpanan browser tidak tersedia. Pilihan baru hanya bertahan di halaman ini.';
   }
 }
 function announce(message: string) {
@@ -33,7 +33,7 @@ function invalidateMessage() {
 }
 function saveBag(renderRows = true) {
   try { localStorage.setItem(KEY, JSON.stringify(compact())); localStorage.removeItem('luke-bag-v1'); storageAvailable = true; }
-  catch { storageAvailable = false; notice = 'Penyimpanan browser tidak tersedia. Pilihan hanya bertahan di halaman ini; izinkan penyimpanan untuk melanjutkan ke tas.'; }
+  catch { storageAvailable = false; notice = 'Penyimpanan browser tidak tersedia. Pilihan hanya bertahan di halaman ini; izinkan penyimpanan untuk melanjutkan ke keranjang.'; }
   invalidateMessage(); renderBag(renderRows);
 }
 function showError(form: HTMLFormElement, text: string | null) {
@@ -59,7 +59,7 @@ function renderBag(renderRows = true) {
   const count = bag.reduce((sum, item) => sum + item.quantity, 0);
   const amounts = totals(bag, store.taxBps);
   document.querySelectorAll('[data-bag-count]').forEach(el => { el.textContent = String(count); });
-  document.querySelector('[data-header-bag]')?.setAttribute('aria-label', `Lihat tas pesanan, ${count} item`);
+  document.querySelector('[data-header-bag]')?.setAttribute('aria-label', `Lihat keranjang pesanan, ${count} item`);
   const mobile = document.querySelector<HTMLElement>('[data-mobile-bag]');
   if (mobile) mobile.hidden = !count || Boolean(document.querySelector('[data-order], [data-inquiry-form]'));
   document.querySelectorAll('[data-bag-total]').forEach(el => { el.textContent = money(amounts.total); });
@@ -126,7 +126,7 @@ function addProduct(productId: string, variantId: string, quantity: number) {
   const existing = bag.find(item => item.productId === productId && item.variantId === variantId);
   if ((existing?.quantity ?? 0) + quantity > 99) { announce('Maksimal 99 per varian di website. Hubungi Luke untuk jumlah lebih besar.'); return; }
   if (existing) existing.quantity += quantity; else bag.push(selected);
-  saveBag(); announce(storageAvailable ? `${selected.name} tersimpan di tas pesanan.` : notice);
+  saveBag(); announce(storageAvailable ? `${selected.name} tersimpan di keranjang pesanan.` : notice);
 }
 document.querySelectorAll<HTMLFormElement>('[data-add-form]').forEach(form => {
   const product = catalog.find(p => p.id === form.dataset.product)!;
@@ -191,7 +191,7 @@ document.querySelector('[data-order-lines]')?.addEventListener('click', event =>
   bag = bag.filter(line => line.quantity > 0); saveBag();
   const updated = Array.from(document.querySelectorAll<HTMLElement>('.order-line')).find(el => el.dataset.product === item.productId && el.dataset.variant === item.variantId);
   (updated?.querySelector<HTMLButtonElement>(`[data-step="${button.dataset.step}"]:not(:disabled)`) ?? document.querySelector<HTMLButtonElement>('[data-order-lines] button:not(:disabled)') ?? document.querySelector<HTMLAnchorElement>('[data-empty-bag] a'))?.focus();
-  announce(removed ? `${name} dihapus dari tas.` : `${name}: ${item.quantity} item.`);
+  announce(removed ? `${name} dihapus dari keranjang.` : `${name}: ${item.quantity} item.`);
 });
 
 async function refreshCatalog() {
@@ -215,8 +215,8 @@ if (pickupForm) {
       if (storageAvailable) { try { saved = JSON.parse(localStorage.getItem(KEY) ?? JSON.stringify(saved)); } catch { /* Use this page's selection if browser storage becomes unavailable. */ } }
       const result = reconcileBag(saved, catalog); bag = result.lines;
       notice = result.notices.join(' '); saveBag();
-      if (result.notices.length) { showError(pickupForm, 'Katalog diperbarui. Tinjau perubahan pada tas, lalu siapkan pesan kembali.'); return; }
-      if (!bag.length) { showError(pickupForm, 'Tambahkan produk ke tas terlebih dahulu.'); return; }
+      if (result.notices.length) { showError(pickupForm, 'Katalog diperbarui. Tinjau perubahan pada keranjang, lalu siapkan pesan kembali.'); return; }
+      if (!bag.length) { showError(pickupForm, 'Tambahkan produk ke keranjang terlebih dahulu.'); return; }
       const details = readDetails(pickupForm);
       const error = detailsError(details, Math.max(...bag.map(p => p.leadHours)), store.pickup); showError(pickupForm, error); if (error) return;
       showMessage(orderMessage(bag, details, store.taxBps));
@@ -268,7 +268,7 @@ if (document.querySelector('[data-catalog]')) {
 }
 window.addEventListener('storage', event => {
   if (event.key !== KEY && event.key !== null) return;
-  loadBag(); invalidateMessage(); notice = notice || 'Tas diperbarui dari tab lain. Tinjau pilihan Anda sebelum melanjutkan.'; renderBag();
+  loadBag(); invalidateMessage(); notice = notice || 'Keranjang diperbarui dari tab lain. Tinjau pilihan Anda sebelum melanjutkan.'; renderBag();
 });
 window.addEventListener('pageshow', event => { if (event.persisted) { loadBag(); invalidateMessage(); renderBag(); } });
 loadBag(); renderBag(); if (notice && !document.querySelector('[data-order]')) announce(notice);
